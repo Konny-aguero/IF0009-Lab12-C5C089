@@ -28,6 +28,10 @@
 <article class="card"><h3>{{ charla.titulo }}</h3><p><strong>Expositor:</strong> {{ charla.expositor }}</p><p><strong>Nivel:</strong> {{ charla.nivel }}</p><p><strong>Contacto:</strong> {{ charla.emailContacto }}</p>
 <p>{{ charla.fechaInicio | date:'dd/MM/yyyy' }} - {{ charla.fechaFin | date:'dd/MM/yyyy' }}</p>
 <div>@for (etiqueta of charla.etiquetas; track $index) { <span class="badge">{{ etiqueta }}</span> }</div>
+<h4>Asistentes ({{ charla.asistentes?.length ?? 0 }})</h4>
+<ul>@for (asistente of charla.asistentes; track asistente.id) { <li>{{ asistente.nombre }} · {{ asistente.correo }} · {{ asistente.edad }} años</li> } @empty { <li>Sin asistentes inscritos.</li> }</ul>
+<button type="button" (click)="charlaSeleccionada = charlaSeleccionada === charla.id ? undefined : charla.id">Inscribir Asistente</button>
+@if (charlaSeleccionada === charla.id && charla.id) { <app-asistente-registro [charlaId]="charla.id" (inscrito)="actualizarAsistentes(charla, $event)" /> }
 </article>
 } @empty { <p>No hay charlas registradas aún en el sistema.</p> }
 </section></div>

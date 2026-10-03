@@ -1,13 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Charla, CharlaService } from '../../services/charla.service';
+import { AsistenteRegistroComponent } from '../asistente-registro/asistente-registro.component';
+import { Asistente, Charla, CharlaService } from '../../services/charla.service';
 import { validarRangoFechas } from '../../validators/validadores';
-@Component({selector: 'app-charla-registro', standalone: true, imports: [ReactiveFormsModule, DatePipe], templateUrl: './charla-registro.component.html'})
+@Component({selector: 'app-charla-registro', standalone: true, imports: [ReactiveFormsModule, DatePipe, AsistenteRegistroComponent], templateUrl: './charla-registro.component.html'})
 export class CharlaRegistroComponent implements OnInit {
   private fb = inject(FormBuilder).nonNullable;
   private servicio = inject(CharlaService);
   charlas: Charla[] = [];
+  charlaSeleccionada?: number;
+  actualizarAsistentes(charla: Charla, asistente: Asistente) {
+    charla.asistentes = [...(charla.asistentes ?? []), asistente];
+    this.charlaSeleccionada = undefined;
+    this.mensajeExito = '¡Asistente inscrito exitosamente!';
+  }
   mensajeExito = '';
   error = '';
   guardando = false;

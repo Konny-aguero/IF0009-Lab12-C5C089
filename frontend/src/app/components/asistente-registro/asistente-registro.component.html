@@ -1,0 +1,11 @@
+<form [formGroup]="inscripcionForm" (ngSubmit)="onSubmit()">
+<fieldset formGroupName="asistente"><legend>Inscribir Asistente</legend>
+<label [for]="'nombre-' + charlaId">Nombre completo</label><input [id]="'nombre-' + charlaId" formControlName="nombre">
+@if (datos.nombre.invalid && datos.nombre.touched) { <p class="error">El nombre es requerido y debe tener al menos 3 caracteres.</p> }
+<label [for]="'correo-' + charlaId">Correo electrónico</label><input [id]="'correo-' + charlaId" type="email" formControlName="correo">
+@if (datos.correo.invalid && datos.correo.touched) { <p class="error">Ingrese un correo válido.</p> }
+<label [for]="'edad-' + charlaId">Edad</label><input [id]="'edad-' + charlaId" type="number" step="1" formControlName="edad">
+@if (datos.edad.invalid && datos.edad.touched) { <p class="error">La edad es requerida y el asistente debe ser mayor de 18 años.</p> }
+@if (error) { <p class="error" role="alert">{{ error }}</p> }
+<button type="submit" [disabled]="inscripcionForm.invalid || guardando">Guardar Asistente</button>
+</fieldset></form>

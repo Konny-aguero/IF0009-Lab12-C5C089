@@ -34,6 +34,10 @@ public class Charla {
     public boolean isRangoFechasValido() {
         return fechaInicio == null || fechaFin == null || !fechaFin.isBefore(fechaInicio);
     }
+    @OneToMany(mappedBy = "charla", cascade = CascadeType.ALL)
+    private List<Asistente> asistentes = new ArrayList<>();
+    public List<Asistente> getAsistentes() { return asistentes; }
+    public void setAsistentes(List<Asistente> asistentes) { this.asistentes = asistentes; }
     public Charla() {}
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

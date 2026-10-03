@@ -2,3 +2,4 @@ INSERT INTO charla (titulo, expositor, nivel, email_contacto, fecha_inicio, fech
 INSERT INTO charla (titulo, expositor, nivel, email_contacto, fecha_inicio, fecha_fin) VALUES ('Microservicios con Spring Cloud', 'Ing. Carlos Brenes', 'Avanzado', 'carlos@spring.io', '2026-11-16', '2026-11-17');
 INSERT INTO charla (titulo, expositor, nivel, email_contacto, fecha_inicio, fecha_fin) VALUES ('Angular 18: Señales y Standalone', 'Licda. Laura Gomez', 'Intermedio', 'laura@angular.dev', '2026-11-17', '2026-11-18');
 INSERT INTO charla_etiquetas (charla_id, etiqueta) VALUES (1, 'IA'), (1, 'Machine Learning'), (2, 'Spring Boot'), (2, 'Backend'), (2, 'Nube'), (3, 'Angular'), (3, 'Frontend');
+INSERT INTO asistente (nombre, correo, edad, charla_id) VALUES ('Ana Mora', 'ana@example.com', 20, 1), ('Luis Castro', 'luis@example.com', 24, 1), ('Sofia Vargas', 'sofia@example.com', 19, 2), ('Diego Solis', 'diego@example.com', 30, 2), ('Elena Rojas', 'elena@example.com', 22, 3);
