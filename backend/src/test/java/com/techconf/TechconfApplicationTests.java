@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 class TechconfApplicationTests {
     @Autowired MockMvc mvc;
     @Autowired JdbcTemplate jdbc;
+    @Autowired jakarta.persistence.EntityManager entityManager;
     @Test void semillasYSerializacionSinRecursion() throws Exception {
         mvc.perform(get("/api/charlas"))
             .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(3))
@@ -53,6 +54,7 @@ class TechconfApplicationTests {
         mvc.perform(post("/api/charlas").contentType(MediaType.APPLICATION_JSON)
             .content(charla("2026-11-20", "2026-11-20", "[\"Docker\",\"DevOps\",\"CI/CD\"]")))
             .andExpect(status().isOk()).andExpect(jsonPath("$.etiquetas.length()").value(3));
+        entityManager.flush();
         assertEquals(10, jdbc.queryForObject("SELECT COUNT(*) FROM charla_etiquetas", Integer.class));
     }
     @Test void rechazaFechasYEtiquetasInvalidas() throws Exception {
