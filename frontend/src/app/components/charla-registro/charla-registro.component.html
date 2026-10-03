@@ -1,0 +1,33 @@
+@if (error) { <p class="error" role="alert">{{ error }}</p> }
+@if (mensajeExito) { <p class="success" role="status">{{ mensajeExito }}</p> }
+<div class="container"><section><h2>Registrar Nueva Charla</h2>
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+<label for="titulo">Título de la Charla</label><input id="titulo" type="text" formControlName="titulo">
+@if (registroForm.controls.titulo.invalid && registroForm.controls.titulo.touched) { <p class="error">El título es requerido y debe tener al menos 5 caracteres.</p> }
+<label for="expositor">Expositor</label><input id="expositor" type="text" formControlName="expositor">
+@if (registroForm.controls.expositor.invalid && registroForm.controls.expositor.touched) { <p class="error">El expositor es requerido.</p> }
+<label for="emailContacto">Email de Contacto</label><input id="emailContacto" type="email" formControlName="emailContacto">
+@if (registroForm.controls.emailContacto.invalid && registroForm.controls.emailContacto.touched) { <p class="error">Ingrese un correo válido.</p> }
+<label for="fechaInicio">Fecha de Inicio</label><input id="fechaInicio" type="date" formControlName="fechaInicio">
+@if (registroForm.controls.fechaInicio.invalid && registroForm.controls.fechaInicio.touched) { <p class="error">La fecha de inicio es requerida.</p> }
+<label for="fechaFin">Fecha de Fin</label><input id="fechaFin" type="date" formControlName="fechaFin">
+@if (registroForm.controls.fechaFin.invalid && registroForm.controls.fechaFin.touched) { <p class="error">La fecha de fin es requerida.</p> }
+<label for="nivel">Nivel de la Charla</label><select id="nivel" formControlName="nivel"><option>Principiante</option><option>Intermedio</option><option>Avanzado</option></select>
+@if (registroForm.hasError('fechasInvalidas') && registroForm.touched) { <p class="error">La fecha de fin no puede ser anterior a la de inicio.</p> }
+<fieldset formArrayName="etiquetas"><legend>Etiquetas Tecnológicas (Tags)</legend>
+@for (control of etiquetasArray.controls; track control; let i = $index) {
+<div class="row"><input [attr.aria-label]="'Etiqueta ' + (i + 1)" [formControlName]="i">
+@if (etiquetasArray.length > 1) { <button class="remove" type="button" (click)="removerEtiqueta(i)" [attr.aria-label]="'Eliminar etiqueta ' + (i + 1)">X</button> }</div>
+@if (control.invalid && control.touched) { <p class="error">La etiqueta es requerida.</p> }
+}
+<button class="secondary" type="button" (click)="agregarEtiqueta()">+ Añadir Otra Etiqueta</button></fieldset>
+<button type="submit" [disabled]="registroForm.invalid || guardando">Guardar Charla</button>
+</form></section>
+<section class="agenda"><h2>Agenda de TechConf</h2>
+@for (charla of charlas; track charla.id) {
+<article class="card"><h3>{{ charla.titulo }}</h3><p><strong>Expositor:</strong> {{ charla.expositor }}</p><p><strong>Nivel:</strong> {{ charla.nivel }}</p><p><strong>Contacto:</strong> {{ charla.emailContacto }}</p>
+<p>{{ charla.fechaInicio | date:'dd/MM/yyyy' }} - {{ charla.fechaFin | date:'dd/MM/yyyy' }}</p>
+<div>@for (etiqueta of charla.etiquetas; track $index) { <span class="badge">{{ etiqueta }}</span> }</div>
+</article>
+} @empty { <p>No hay charlas registradas aún en el sistema.</p> }
+</section></div>
